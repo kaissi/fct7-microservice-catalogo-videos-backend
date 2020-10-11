@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+
+  laravel-files:
+    build:
+      context: .
+    container_name: laravel-files-tmp
+    volumes:
+      - type: volume
+        source: laravel-files-tmp-data
+        target: /var/www
+    restart: "no"
+  
+volumes:
+  laravel-files-tmp-data:
+    external: true
