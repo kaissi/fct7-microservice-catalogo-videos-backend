@@ -1,0 +1,43 @@
+version: '3.8'
+
+x-vars:
+
+  var-1.1: &_APP_ENV          "_APP_ENV=local"
+  var-1.2: &_APP_URL          "_APP_URL=http://localhost"
+
+  var-2.1: &_DB_HOST          "_DB_HOST=db"
+  var-2.2: &_DB_PORT          "_DB_PORT=3306"
+  var-2.3: &_DB_DATABASE      "_DB_DATABASE=video_catalog"
+  var-2.4: &_DB_USERNAME      "_DB_USERNAME=root"
+  var-2.5: &_DB_PASSWORD      "_DB_PASSWORD=root"
+
+  var-3.1: &_REDIS_HOST       "_REDIS_HOST=redis"
+  var-3.2: &_REDIS_PORT       "_REDIS_PORT=6379"
+  var-3.3: &_REDIS_PASSWORD   "_REDIS_PASSWORD=null"
+
+services:
+
+  app:
+    build:
+      context: .
+    container_name: ms-video-catalog-backend-app
+    entrypoint: dockerize -template .docker/app/.env.template:.env .docker/app/entrypoint.sh
+    environment:
+      - *_APP_ENV
+      - *_APP_URL
+      - *_DB_HOST
+      - *_DB_PORT
+      - *_DB_DATABASE
+      - *_DB_USERNAME
+      - *_DB_PASSWORD
+      - *_REDIS_HOST
+      - *_REDIS_PORT
+      - *_REDIS_PASSWORD
+    volumes:
+      - .:/var/www
+    networks:
+      - app-network
+  
+networks:
+  app-network:
+    driver: bridge

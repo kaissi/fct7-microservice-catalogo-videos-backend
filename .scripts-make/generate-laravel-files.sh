@@ -10,19 +10,19 @@ docker volume create \
     laravel-files-tmp-data
 
 docker-compose \
-	-f .docker/generate-laravel-files/docker-compose.yaml \
+	-f .docker/laravel/docker-compose.yaml \
 	build --no-cache --parallel --force-rm --compress
 
 docker-compose \
-    -f .docker/generate-laravel-files/docker-compose.yaml \
+    -f .docker/laravel/docker-compose.yaml \
     up --force-recreate
 
 docker-compose \
-	-f .docker/generate-laravel-files/docker-compose.yaml \
+	-f .docker/laravel/docker-compose.yaml \
 	down --volumes --rmi all --remove-orphans
 
 docker-compose \
-    -f .docker/generate-laravel-files/docker-compose.yaml \
+    -f .docker/laravel/docker-compose.yaml \
     rm -f -v
 
 docker volume rm laravel-files-tmp-data

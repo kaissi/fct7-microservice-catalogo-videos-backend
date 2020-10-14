@@ -18,22 +18,28 @@ get-archs: ## return all architectures that can be used
 	@echo $(ARCHS_ALL)
 
 generate-laravel-files: ## generate Laravel files (execute this only once)
-	@.scripts/generate-laravel-files.sh
+	@.scripts-make/generate-laravel-files.sh
 
 copy-laravel-files: ## copy the generated Laravel files to the root project folder
-	@.scripts/copy-laravel-files.sh
+	@.scripts-make/copy-laravel-files.sh
 
-build: ## build Docker to local platform (default target)
-	@.scripts/build-default.sh
+build: ## build Docker for the local platform (default target)
+	@.scripts-make/build-default.sh
 
-build-%: ## build Docker to a specific platform (See 'make get-archs')
-	@.scripts/build-multi-arch.sh ${*}
+#build-%: ## build Docker for a specific platform (See 'make get-archs')
+#	@.scripts-make/build-multi-arch.sh ${*}
 
-build-all: ## build Docker to multiple architectures (See 'make get-archs'). You can build for a specific platform using 'make build-armv7', for example
-	@.scripts/build-multi-arch.sh all
+#build-all: ## build Docker for multiple architectures (See 'make get-archs'). You can build for a specific platform using 'make build-armv7', for example
+#	@.scripts-make/build-multi-arch.sh all
 
-release: build-all ## execute 'build-all', push all the images to Docker Hub and generate manifest
-	@.scripts/release.sh
+#release: build-all ## execute 'build-all', push all the images to Docker Hub and generate manifest
+#	@.scripts-make/release.sh
+
+run: ## run standalone
+	@.scripts-make/run-standalone.sh
+
+delete: ## delete standalone running docker
+	@.scripts-make/delete-standalone.sh
 
 help: ## this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
